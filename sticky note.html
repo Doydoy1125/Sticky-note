@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Notes with Sidebar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #FFF3E0;
+      display: flex;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #1E3A5F;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .search-input, .add-note-btn {
+      padding: 0.5rem;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+    }
+    .add-note-btn {
+      background-color: #FFA726;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .title-list {
+      width: 100%;
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    .title-list-item {
+      cursor: pointer;
+      padding: 10px;
+      text-align: center;
+      color: white;
+      border-bottom: 1px solid #444;
+      display: flex;
+      justify-content: space-between;
+    }
+    .title-list-item:hover {
+      background-color: #2A4A7A;
+    }
+    .pin-btn {
+      background: transparent;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0 5px;
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 600px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .note {
+      display: none;
+      padding: 1rem;
+      width: 450px;
+      height: 600px;
+      min-width: 150px;
+      min-height: 150px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow-wrap: break-word;
+      resize: both;
+      overflow: auto;
+      background-color: #ffeb3b;
+    }
+    .note.highlight {
+      border: 2px solid #007BFF;
+    }
+    .note input.title {
+      width: calc(100% - 2rem);
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      background: none;
+      outline: none;
+      padding: 0.3rem;
+    }
+    .note textarea {
+      width: 100%;
+      height: calc(100% - 4rem);
+      border: none;
+      background: none;
+      outline: none;
+      resize: none;
+      font-size: 1rem;
+      margin-top: 0.3rem;
+    }
+    .note .copy-button {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: #007BFF;
+      border: none;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.8rem;
+    }
+    .note button.delete-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ff5722;
+      border: none;
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+    .export-import {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .export-import button, .import-input {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin: 5px 0;
+    }
+    .export-import button {
+      background-color: #007BFF;
+      color: white;
+    }
+    .import-input {
+      background-color: #FFA726;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Sticky Notes</h2>
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search by title" oninput="filterNotes()">
+      <button class="add-note-btn" onclick="addNote()">Add Note</button>
+    </div>
+    <ul class="title-list" id="titleList"></ul>
+    <div class="export-import">
+      <button onclick="exportNotes()">Export Notes</button>
+      <input type="file" class="import-input" id="importInput" accept=".json" onchange="importNotes(event)" style="display: none;">
+      <button onclick="document.getElementById('importInput').click()">Import Notes</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="container" id="notesContainer"></div>
+  </div>
+
+  <script>
+    const notesContainer = document.getElementById('notesContainer');
+    const searchInput = document.getElementById('searchInput');
+    const titleList = document.getElementById('titleList');
+    const importInput = document.getElementById('importInput');
+
+    function loadNotes() {
+      const notes = JSON.parse(localStorage.getItem('notes') || '[]');
+      notes.forEach(note => {
+        createNoteElement(note.title || '', note.content, note.pinned);
+      });
+    }
+
+    function saveNotes() {
+      const notes = [];
+      document.querySelectorAll('.note').forEach(note => {
+        const title = note.querySelector('input.title').value;
+        const content = note.querySelector('textarea').value;
+        const pinned = note.dataset.pinned === 'true';
+        notes.push({ title, content, pinned });
+      });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      updateTitleList();
+    }
+
+    function createNoteElement(title = '', content = '', pinned = false) {
+      const note = document.createElement('div');
+      note.classList.add('note');
+      note.style.display = 'block';
+      note.dataset.pinned = pinned;
+
+      const titleInput = document.createElement('input');
+      titleInput.classList.add('title');
+      titleInput.value = title;
+      titleInput.placeholder = 'Title';
+      titleInput.oninput = saveNotes;
+
+      const textarea = document.createElement('textarea');
+      textarea.value = content;
+      textarea.oninput = saveNotes;
+
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('delete-button');
+      deleteButton.textContent = '×';
+      deleteButton.onclick = () => {
+        note.remove();
+        saveNotes();
+      };
+
+      const copyButton = document.createElement('button');
+      copyButton.classList.add('copy-button');
+      copyButton.textContent = 'Copy';
+      copyButton.onclick = () => {
+        navigator.clipboard.writeText(textarea.value).catch(err => console.error("Error copying text: ", err));
+      };
+
+      note.appendChild(titleInput);
+      note.appendChild(textarea);
+      note.appendChild(deleteButton);
+      note.appendChild(copyButton);
+      notesContainer.appendChild(note);
+      updateTitleList();
+    }
+
+    function addNote() {
+      createNoteElement();
+      saveNotes();
+    }
+
+    function filterNotes() {
+      const filter = searchInput.value.toLowerCase();
+      const notes = document.querySelectorAll('.note');
+      
+      notes.forEach(note => {
+        const title = note.querySelector('input.title').value.toLowerCase();
+        note.style.display = title.includes(filter) ? "block" : "none";
+      });
+    }
+
+    function updateTitleList() {
+      titleList.innerHTML = '';
+      const notes = Array.from(document.querySelectorAll('.note'));
+
+      notes.sort((a, b) => {
+        const pinnedA = a.dataset.pinned === 'true';
+        const pinnedB = b.dataset.pinned === 'true';
+        if (pinnedA && !pinnedB) return -1;
+        if (!pinnedA && pinnedB) return 1;
+        const titleA = a.querySelector('input.title').value.toLowerCase();
+        const titleB = b.querySelector('input.title').value.toLowerCase();
+        return titleA.localeCompare(titleB);
+      });
+
+      notes.forEach(note => {
+        const title = note.querySelector('input.title').value || 'Untitled';
+        const listItem = document.createElement('li');
+        listItem.classList.add('title-list-item');
+        listItem.textContent = title;
+
+        const pinButton = document.createElement('button');
+        pinButton.classList.add('pin-btn');
+        pinButton.textContent = note.dataset.pinned === 'true' ? '📌' : '📍';
+        pinButton.onclick = (e) => {
+          e.stopPropagation();
+          togglePin(note, pinButton);
+        };
+
+        listItem.appendChild(pinButton);
+        listItem.onclick = () => showNoteAndCopy(note);
+        titleList.appendChild(listItem);
+      });
+    }
+
+    function togglePin(note, pinButton) {
+      note.dataset.pinned = note.dataset.pinned === 'true' ? 'false' : 'true';
+      pinButton.textContent = note.dataset.pinned === 'true' ? '📌' : '📍';
+      saveNotes();
+      updateTitleList();
+    }
+
+    function showNoteAndCopy(note) {
+      document.querySelectorAll('.note').forEach(n => n.style.display = 'none');
+      note.style.display = 'block';
+      note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      const noteContent = note.querySelector('textarea').value;
+      navigator.clipboard.writeText(noteContent).catch(err => console.error("Error copying text: ", err));
+    }
+
+    function exportNotes() {
+      const notes = JSON.parse(localStorage.getItem('notes') || '[]');
+      const blob = new Blob([JSON.stringify(notes, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sticky_notes.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importNotes(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const importedNotes = JSON.parse(e.target.result);
+        localStorage.setItem('notes', JSON.stringify(importedNotes));
+        notesContainer.innerHTML = ''; // Clear existing notes
+        loadNotes(); // Load imported notes
+      };
+      reader.readAsText(file);
+    }
+
+    loadNotes();
+  </script>
+</body>
+</html>
