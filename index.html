@@ -1,347 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sticky Notes with Sidebar</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #FFF3E0;
-      display: flex;
-      margin: 0;
-      min-height: 100vh;
-    }
-    .sidebar {
-      width: 250px;
-      background-color: #1E3A5F;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-      height: 100vh;
-      overflow-y: auto;
-    }
-    .sidebar h2 {
-      font-size: 1.2rem;
-      text-align: center;
-    }
-    .search-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .search-input, .add-note-btn {
-      padding: 0.5rem;
-      width: 100%;
-      border: none;
-      border-radius: 5px;
-    }
-    .add-note-btn {
-      background-color: #FFA726;
-      color: white;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .title-list {
-      width: 100%;
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-    .title-list-item {
-      cursor: pointer;
-      padding: 10px;
-      text-align: center;
-      color: white;
-      border-bottom: 1px solid #444;
-      display: flex;
-      justify-content: space-between;
-    }
-    .title-list-item:hover {
-      background-color: #2A4A7A;
-    }
-    .pin-btn {
-      background: transparent;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0 5px;
-    }
-    .main-content {
-      flex: 1;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .container {
-      width: 90%;
-      max-width: 600px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .note {
-      display: none;
-      padding: 1rem;
-      width: 450px;
-      height: 600px;
-      min-width: 150px;
-      min-height: 150px;
-      border-radius: 5px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow-wrap: break-word;
-      resize: both;
-      overflow: auto;
-      background-color: #ffeb3b;
-    }
-    .note.highlight {
-      border: 2px solid #007BFF;
-    }
-    .note input.title {
-      width: calc(100% - 2rem);
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: none;
-      background: none;
-      outline: none;
-      padding: 0.3rem;
-    }
-    .note textarea {
-      width: 100%;
-      height: calc(100% - 4rem);
-      border: none;
-      background: none;
-      outline: none;
-      resize: none;
-      font-size: 1rem;
-      margin-top: 0.3rem;
-    }
-    .note .copy-button {
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      background: #007BFF;
-      border: none;
-      color: white;
-      border-radius: 3px;
-      cursor: pointer;
-      padding: 0.3rem 0.5rem;
-      font-size: 0.8rem;
-    }
-    .note button.delete-button {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: #ff5722;
-      border: none;
-      color: white;
-      border-radius: 50%;
-      cursor: pointer;
-      padding: 0.3rem;
-    }
-    .export-import {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
-    .export-import button, .import-input {
-      padding: 0.5rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      margin: 5px 0;
-    }
-    .export-import button {
-      background-color: #007BFF;
-      color: white;
-    }
-    .import-input {
-      background-color: #FFA726;
-      color: white;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiptop Distribution Inc. | Condiments &amp; Sauces, Delivered Nationwide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#173626;
+    --green-mid:#2f6b4a;
+    --green-fresh:#4f9d68;
+    --cream:#faf6ec;
+    --paper:#fffdf8;
+    --gold:#e2a63b;
+    --charcoal:#26261f;
+    --wood:#8a6a45;
+    --wood-dark:#6b4f31;
+    --line:rgba(23,54,38,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--charcoal);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    margin:0;
+    color:var(--green-deep);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--wood-dark);
+    font-weight:500;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{padding:96px 0;}
+  @media(max-width:760px){ section{padding:64px 0;} .wrap{padding:0 20px;} }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,246,236,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:78px;
+  }
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-mark{
+    width:38px;height:38px;border-radius:9px;
+    background:linear-gradient(155deg,var(--green-fresh),var(--green-deep));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);font-family:'Fraunces',serif;font-weight:900;font-size:18px;
+    box-shadow:0 4px 10px rgba(23,54,38,0.25);
+  }
+  .logo-text{font-family:'Fraunces',serif;font-weight:700;font-size:19px;color:var(--green-deep);letter-spacing:-0.01em;}
+  .logo-text span{color:var(--wood-dark);font-weight:400;font-style:italic;font-size:14px;display:block;margin-top:-2px;}
+  .nav-links{display:flex;gap:34px;font-size:14.5px;font-weight:600;}
+  .nav-links a{position:relative;padding:6px 0;color:var(--green-deep);}
+  .nav-links a:after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover:after{width:100%;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:100px;
+    font-weight:600;font-size:14.5px;
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--gold);color:var(--green-deep);box-shadow:0 8px 20px rgba(226,166,59,0.35);}
+  .btn-ghost{border-color:var(--green-deep);color:var(--green-deep);}
+  .btn-light{background:var(--paper);color:var(--green-deep);}
+  .nav-cta{display:none;}
+  @media(min-width:900px){ .nav-cta{display:inline-flex;} }
+  .burger{display:none;}
+  @media(max-width:899px){ .nav-links{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:radial-gradient(120% 140% at 15% -10%, #2a5a3f 0%, var(--green-deep) 55%, #0f2418 100%);
+    padding:110px 0 0;
+    color:var(--cream);
+  }
+  .hero .wrap{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:50px;align-items:center;
+  }
+  @media(max-width:900px){ .hero .wrap{grid-template-columns:1fr;} }
+  .hero h1{
+    color:var(--paper);font-size:clamp(38px,5vw,62px);line-height:1.04;letter-spacing:-0.01em;
+  }
+  .hero h1 em{color:var(--gold);font-style:italic;}
+  .hero p.lead{
+    color:rgba(250,246,236,0.82);font-size:17.5px;max-width:480px;margin:22px 0 32px;
+  }
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-stats{display:flex;gap:28px;margin-top:52px;flex-wrap:wrap;}
+  .hero-stats div{border-left:2px solid rgba(226,166,59,0.5);padding-left:14px;}
+  .hero-stats b{font-family:'Fraunces',serif;font-size:26px;color:var(--paper);display:block;}
+  .hero-stats span{font-size:12.5px;color:rgba(250,246,236,0.65);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* shelf illustration */
+  .shelf-scene{position:relative;height:420px;}
+  .shelf-row{
+    position:absolute;left:0;right:0;height:118px;
+    display:flex;align-items:flex-end;gap:16px;padding:0 6px 14px;
+  }
+  .shelf-row:after{
+    content:"";position:absolute;left:-20px;right:-20px;bottom:0;height:14px;
+    background:linear-gradient(180deg,var(--wood),var(--wood-dark));
+    border-radius:3px;box-shadow:0 10px 18px rgba(0,0,0,0.35);
+  }
+  .shelf-row.r1{top:0;}
+  .shelf-row.r2{top:150px;}
+  .shelf-row.r3{top:300px;}
+  .jar{
+    position:relative;z-index:2;border-radius:8px 8px 4px 4px;
+    box-shadow:0 10px 16px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(255,255,255,0.12);
+    display:flex;align-items:flex-start;justify-content:center;padding-top:8px;
+  }
+  .jar-label{
+    width:70%;background:rgba(250,246,236,0.9);border-radius:3px;height:34%;margin-top:26%;
+  }
+  .jar.h1{height:96px;width:46px;}
+  .jar.h2{height:80px;width:52px;}
+  .jar.h3{height:104px;width:40px;}
+  .jar.h4{height:70px;width:60px;}
+  .c1{background:linear-gradient(180deg,#c94b30,#8f2f1c);}
+  .c2{background:linear-gradient(180deg,#e2a63b,#a8721e);}
+  .c3{background:linear-gradient(180deg,#4f9d68,#265c3c);}
+  .c4{background:linear-gradient(180deg,#4a3421,#2a1c11);}
+  .c5{background:linear-gradient(180deg,#d8cfa8,#a9986a);}
+
+  /* ---------- TRUST BAR ---------- */
+  .trustbar{
+    background:var(--green-deep);border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .trustbar .wrap{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:26px 32px;
+  }
+  .trustbar span{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.05em;
+    color:rgba(250,246,236,0.75);text-transform:uppercase;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-head{max-width:640px;margin-bottom:52px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,40px);margin-top:12px;letter-spacing:-0.01em;}
+  .sec-head p{margin-top:16px;color:#4a4a3f;font-size:16px;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;}
+  @media(max-width:860px){ .about-grid{grid-template-columns:1fr;gap:36px;} }
+  .about-frame{
+    aspect-ratio:4/5;border-radius:18px;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 14px),
+      linear-gradient(155deg,var(--green-fresh),var(--green-deep));
+    position:relative;overflow:hidden;
+    box-shadow:0 24px 50px rgba(23,54,38,0.25);
+  }
+  .about-frame .tag{
+    position:absolute;bottom:22px;left:22px;right:22px;
+    background:rgba(250,246,236,0.94);border-radius:12px;padding:16px 18px;
+  }
+  .about-frame .tag .eyebrow{margin-bottom:4px;}
+  .about-body p{color:#3d3d33;font-size:16px;margin-bottom:16px;}
+  .about-list{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px;}
+  .about-list li{display:flex;gap:12px;font-size:15px;color:#3d3d33;}
+  .about-list b{color:var(--green-deep);}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:7px;flex:none;}
+
+  /* ---------- PRODUCT SHOWROOM ---------- */
+  .showroom{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .shelf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  @media(max-width:860px){ .shelf-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:560px){ .shelf-grid{grid-template-columns:1fr;} }
+  .prod-card{
+    background:var(--paper);padding:34px 28px 28px;position:relative;
+    transition:background .25s ease;
+  }
+  .prod-card:hover{background:#fbf3e0;}
+  .prod-icon{
+    width:52px;height:52px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(155deg,var(--green-fresh),var(--green-deep));
+    color:var(--cream);font-size:22px;margin-bottom:20px;
+  }
+  .prod-card h3{font-size:19px;margin-bottom:8px;}
+  .prod-card p{font-size:14.5px;color:#5a5a4d;margin-bottom:14px;}
+  .prod-card .sku{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--wood-dark);
+    letter-spacing:.05em;text-transform:uppercase;
+  }
+  .prod-card:after{
+    content:"";position:absolute;left:28px;right:28px;bottom:0;height:8px;
+    background:linear-gradient(180deg,var(--wood),var(--wood-dark));border-radius:2px 2px 0 0;
+    opacity:0.9;
+  }
+
+  /* ---------- WHY PARTNER ---------- */
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  @media(max-width:900px){ .why-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:520px){ .why-grid{grid-template-columns:1fr;} }
+  .why-card{padding:0;}
+  .why-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.05em;}
+  .why-card h3{font-size:18px;margin:10px 0 8px;}
+  .why-card p{font-size:14.5px;color:#5a5a4d;}
+
+  /* ---------- COVERAGE ---------- */
+  .coverage{background:var(--green-deep);color:var(--paper);}
+  .coverage .sec-head h2, .coverage .sec-head p{color:var(--paper);}
+  .coverage .sec-head p{color:rgba(250,246,236,0.75);}
+  .region-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.12);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);}
+  @media(max-width:860px){ .region-grid{grid-template-columns:repeat(2,1fr);} }
+  .region-cell{background:rgba(255,255,255,0.03);padding:22px 20px;}
+  .region-cell .eyebrow{color:var(--gold);}
+  .region-cell h4{color:var(--paper);font-size:16.5px;margin-top:6px;}
+  .region-cell p{color:rgba(250,246,236,0.65);font-size:13.5px;margin-top:6px;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+  @media(max-width:860px){ .contact-grid{grid-template-columns:1fr;gap:36px;} }
+  .info-row{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);}
+  .info-row:first-child{padding-top:0;}
+  .info-icon{
+    width:40px;height:40px;border-radius:10px;background:var(--green-deep);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;flex:none;font-size:17px;
+  }
+  .info-row b{display:block;font-size:15px;color:var(--green-deep);margin-bottom:2px;}
+  .info-row span{font-size:14.5px;color:#5a5a4d;}
+  form{display:grid;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:32px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:520px){ .form-row{grid-template-columns:1fr;} }
+  label{font-size:13px;font-weight:600;color:var(--green-deep);display:block;margin-bottom:6px;}
+  input,textarea,select{
+    width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--cream);font-family:'Inter',sans-serif;font-size:14.5px;color:var(--charcoal);
+  }
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--green-fresh);outline-offset:1px;}
+  textarea{resize:vertical;min-height:100px;}
+  .form-note{font-size:12.5px;color:#7a7a6c;margin-top:-4px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#0f2418;color:rgba(250,246,236,0.7);padding:56px 0 28px;}
+  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
+  .footer-cols h4{color:var(--paper);font-size:14px;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px;}
+  .footer-cols a{display:block;font-size:14px;margin-bottom:10px;color:rgba(250,246,236,0.65);}
+  .footer-cols a:hover{color:var(--gold);}
+  .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:24px;font-size:13px;}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.show{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none;} }
+</style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Sticky Notes</h2>
-    <div class="search-container">
-      <input type="text" class="search-input" id="searchInput" placeholder="Search by title" oninput="filterNotes()">
-      <button class="add-note-btn" onclick="addNote()">Add Note</button>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">
+      <div class="logo-mark">T</div>
+      <div class="logo-text">TIPTOP<span>Distribution Inc.</span></div>
     </div>
-    <ul class="title-list" id="titleList"></ul>
-    <div class="export-import">
-      <button onclick="exportNotes()">Export Notes</button>
-      <input type="file" class="import-input" id="importInput" accept=".json" onchange="importNotes(event)" style="display: none;">
-      <button onclick="document.getElementById('importInput').click()">Import Notes</button>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-primary nav-cta">Become a Partner</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Wholesale Distributor · Est. Philippines</p>
+      <h1>Stocking every shelf,<br><em>from source to sari-sari.</em></h1>
+      <p class="lead">Tiptop Distribution Inc. moves the condiments, sauces, and pantry staples Filipino households trust — reliably, on time, nationwide.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-primary">View Product Line</a>
+        <a href="#contact" class="btn btn-ghost" style="border-color:rgba(250,246,236,0.4);color:var(--paper);">Become a Partner</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>15+</b><span>Years Distributing</span></div>
+        <div><b>300+</b><span>Retail Partners</span></div>
+        <div><b>6</b><span>Product Categories</span></div>
+      </div>
+    </div>
+    <div class="shelf-scene">
+      <div class="shelf-row r1">
+        <div class="jar h2 c1"><div class="jar-label"></div></div>
+        <div class="jar h1 c2"><div class="jar-label"></div></div>
+        <div class="jar h3 c3"><div class="jar-label"></div></div>
+        <div class="jar h2 c4"><div class="jar-label"></div></div>
+      </div>
+      <div class="shelf-row r2">
+        <div class="jar h3 c2"><div class="jar-label"></div></div>
+        <div class="jar h2 c5"><div class="jar-label"></div></div>
+        <div class="jar h1 c1"><div class="jar-label"></div></div>
+        <div class="jar h4 c3"><div class="jar-label"></div></div>
+      </div>
+      <div class="shelf-row r3">
+        <div class="jar h1 c3"><div class="jar-label"></div></div>
+        <div class="jar h2 c1"><div class="jar-label"></div></div>
+        <div class="jar h3 c2"><div class="jar-label"></div></div>
+        <div class="jar h2 c4"><div class="jar-label"></div></div>
+      </div>
     </div>
   </div>
-
-  <div class="main-content">
-    <div class="container" id="notesContainer"></div>
+  <div class="trustbar">
+    <div class="wrap">
+      <span>Datu-style Vinegars</span>
+      <span>Banana &amp; Tomato Catsup</span>
+      <span>Soy &amp; Fish Sauce</span>
+      <span>Cooking Oils</span>
+      <span>Specialty Sauces</span>
+      <span>Seasonings</span>
+    </div>
   </div>
+</section>
 
-  <script>
-    const notesContainer = document.getElementById('notesContainer');
-    const searchInput = document.getElementById('searchInput');
-    const titleList = document.getElementById('titleList');
-    const importInput = document.getElementById('importInput');
+<section id="about">
+  <div class="wrap about-grid reveal">
+    <div class="about-frame">
+      <div class="tag">
+        <p class="eyebrow">Our Warehouse</p>
+        <h4 style="font-size:16px;">Central hub, Batangas region</h4>
+      </div>
+    </div>
+    <div class="about-body">
+      <p class="eyebrow">Who We Are</p>
+      <h2 style="margin:12px 0 18px;font-size:clamp(26px,3vw,36px);">A distribution partner built for the Filipino pantry</h2>
+      <p>Tiptop Distribution Inc. connects trusted condiment and sauce brands with the sari-sari stores, groceries, and food service businesses that keep every Filipino table full.</p>
+      <p>We handle the logistics — storage, order fulfillment, and delivery — so our brand partners can focus on what they do best, and our retail partners always have stock on hand.</p>
+      <ul class="about-list">
+        <li><span class="dot"></span><span><b>Reliable fulfillment</b> — consistent, on-schedule deliveries across our coverage area.</span></li>
+        <li><span class="dot"></span><span><b>Proper storage &amp; handling</b> — temperature-appropriate warehousing for every product line.</span></li>
+        <li><span class="dot"></span><span><b>Retailer support</b> — flexible order sizes for stores of every scale.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-    function loadNotes() {
-      const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-      notes.forEach(note => {
-        createNoteElement(note.title || '', note.content, note.pinned);
-      });
-    }
+<section class="showroom" id="products">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">The Showroom</p>
+      <h2>Our product lines</h2>
+      <p>A full pantry of condiments and sauces, distributed to retailers and food service partners nationwide. Replace the categories below with your actual product brands and photos.</p>
+    </div>
+    <div class="shelf-grid reveal">
+      <div class="prod-card">
+        <div class="prod-icon">🍋</div>
+        <h3>Vinegar &amp; Souring Agents</h3>
+        <p>Cane, coconut, and spiced vinegars for sawsawan and cooking.</p>
+        <span class="sku">Category 01</span>
+      </div>
+      <div class="prod-card">
+        <div class="prod-icon">🍅</div>
+        <h3>Banana &amp; Tomato Catsup</h3>
+        <p>Classic and spiced catsup varieties, sold by the case or pallet.</p>
+        <span class="sku">Category 02</span>
+      </div>
+      <div class="prod-card">
+        <div class="prod-icon">🫙</div>
+        <h3>Soy &amp; Fish Sauce</h3>
+        <p>Everyday staples for marinades, dips, and home cooking.</p>
+        <span class="sku">Category 03</span>
+      </div>
+      <div class="prod-card">
+        <div class="prod-icon">🫒</div>
+        <h3>Cooking Oils</h3>
+        <p>Palm and vegetable oils in retail and food-service sizes.</p>
+        <span class="sku">Category 04</span>
+      </div>
+      <div class="prod-card">
+        <div class="prod-icon">🌶️</div>
+        <h3>Specialty &amp; Sawsawan Sauces</h3>
+        <p>Lechon sauce, banana ketchup blends, and regional favorites.</p>
+        <span class="sku">Category 05</span>
+      </div>
+      <div class="prod-card">
+        <div class="prod-icon">🧂</div>
+        <h3>Seasonings &amp; Mixes</h3>
+        <p>Powdered seasonings, marinades, and flavor mixes.</p>
+        <span class="sku">Category 06</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function saveNotes() {
-      const notes = [];
-      document.querySelectorAll('.note').forEach(note => {
-        const title = note.querySelector('input.title').value;
-        const content = note.querySelector('textarea').value;
-        const pinned = note.dataset.pinned === 'true';
-        notes.push({ title, content, pinned });
-      });
-      localStorage.setItem('notes', JSON.stringify(notes));
-      updateTitleList();
-    }
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Why Partner With Tiptop</p>
+      <h2>Built for retailers who can't afford to run out of stock</h2>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <p class="why-num">01</p>
+        <h3>On-time delivery</h3>
+        <p>Scheduled routes across our coverage area keep your shelves consistently stocked.</p>
+      </div>
+      <div class="why-card">
+        <p class="why-num">02</p>
+        <h3>Flexible order sizes</h3>
+        <p>From single cases for small sari-sari stores to full pallets for supermarkets.</p>
+      </div>
+      <div class="why-card">
+        <p class="why-num">03</p>
+        <h3>Quality assurance</h3>
+        <p>Proper storage and handling for every batch, from warehouse to your door.</p>
+      </div>
+      <div class="why-card">
+        <p class="why-num">04</p>
+        <h3>Direct support</h3>
+        <p>A dedicated contact for orders, questions, and account concerns.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function createNoteElement(title = '', content = '', pinned = false) {
-      const note = document.createElement('div');
-      note.classList.add('note');
-      note.style.display = 'block';
-      note.dataset.pinned = pinned;
+<section class="coverage" id="coverage">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Where We Deliver</p>
+      <h2>Our coverage area</h2>
+      <p>Update this section with the actual provinces, cities, or regions Tiptop currently services.</p>
+    </div>
+    <div class="region-grid reveal">
+      <div class="region-cell">
+        <p class="eyebrow">Region</p>
+        <h4>CALABARZON</h4>
+        <p>Batangas · Cavite · Laguna</p>
+      </div>
+      <div class="region-cell">
+        <p class="eyebrow">Region</p>
+        <h4>Metro Manila</h4>
+        <p>All cities, daily delivery routes</p>
+      </div>
+      <div class="region-cell">
+        <p class="eyebrow">Region</p>
+        <h4>Central Luzon</h4>
+        <p>Bulacan · Pampanga</p>
+      </div>
+      <div class="region-cell">
+        <p class="eyebrow">Region</p>
+        <h4>MIMAROPA</h4>
+        <p>Scheduled deliveries on request</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-      const titleInput = document.createElement('input');
-      titleInput.classList.add('title');
-      titleInput.value = title;
-      titleInput.placeholder = 'Title';
-      titleInput.oninput = saveNotes;
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <p class="eyebrow">Get In Touch</p>
+      <h2 style="margin:12px 0 24px;font-size:clamp(26px,3vw,36px);">Let's stock your store</h2>
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div><b>Warehouse &amp; Office</b><span>Your business address, City, Province</span></div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div><b>Phone</b><span>(043) 000 0000 · 0917 000 0000</span></div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">✉️</div>
+        <div><b>Email</b><span>orders@tiptopdistribution.ph</span></div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🕒</div>
+        <div><b>Business Hours</b><span>Monday – Saturday, 8:00 AM – 5:00 PM</span></div>
+      </div>
+    </div>
+    <form class="reveal" onsubmit="event.preventDefault(); alert('Thanks! This form is a placeholder — connect it to your email or a form service to start receiving inquiries.');">
+      <div>
+        <label>Business Name</label>
+        <input type="text" placeholder="e.g. Aling Nena Sari-Sari Store" required>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Contact Person</label>
+          <input type="text" placeholder="Full name" required>
+        </div>
+        <div>
+          <label>Phone Number</label>
+          <input type="tel" placeholder="09XX XXX XXXX" required>
+        </div>
+      </div>
+      <div>
+        <label>Email Address</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+      <div>
+        <label>What are you interested in?</label>
+        <select>
+          <option>Becoming a retail partner</option>
+          <option>Bulk / food service order</option>
+          <option>Brand or supplier inquiry</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div>
+        <label>Message</label>
+        <textarea placeholder="Tell us about your store and what you'd like to order..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="justify-content:center;">Send Inquiry</button>
+      <p class="form-note">This form doesn't send anywhere yet — hook it up to your email or a service like Formspree when you're ready to go live.</p>
+    </form>
+  </div>
+</section>
 
-      const textarea = document.createElement('textarea');
-      textarea.value = content;
-      textarea.oninput = saveNotes;
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div style="max-width:280px;">
+        <div class="logo" style="margin-bottom:14px;">
+          <div class="logo-mark">T</div>
+          <div class="logo-text" style="color:var(--paper);">TIPTOP<span style="color:rgba(250,246,236,0.55);">Distribution Inc.</span></div>
+        </div>
+        <p style="font-size:14px;">Distributing the condiments and sauces Filipino households and businesses trust, nationwide.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Explore</h4>
+          <a href="#products">Products</a>
+          <a href="#about">About Us</a>
+          <a href="#coverage">Coverage Area</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div>
+          <h4>Connect</h4>
+          <a href="#">Facebook</a>
+          <a href="#">Instagram</a>
+          <a href="#">Viber Business</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Tiptop Distribution Inc. All rights reserved.</span>
+      <span>Site built for showcase purposes.</span>
+    </div>
+  </div>
+</footer>
 
-      const deleteButton = document.createElement('button');
-      deleteButton.classList.add('delete-button');
-      deleteButton.textContent = '×';
-      deleteButton.onclick = () => {
-        note.remove();
-        saveNotes();
-      };
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+</script>
 
-      const copyButton = document.createElement('button');
-      copyButton.classList.add('copy-button');
-      copyButton.textContent = 'Copy';
-      copyButton.onclick = () => {
-        navigator.clipboard.writeText(textarea.value).catch(err => console.error("Error copying text: ", err));
-      };
-
-      note.appendChild(titleInput);
-      note.appendChild(textarea);
-      note.appendChild(deleteButton);
-      note.appendChild(copyButton);
-      notesContainer.appendChild(note);
-      updateTitleList();
-    }
-
-    function addNote() {
-      createNoteElement();
-      saveNotes();
-    }
-
-    function filterNotes() {
-      const filter = searchInput.value.toLowerCase();
-      const notes = document.querySelectorAll('.note');
-      
-      notes.forEach(note => {
-        const title = note.querySelector('input.title').value.toLowerCase();
-        note.style.display = title.includes(filter) ? "block" : "none";
-      });
-    }
-
-    function updateTitleList() {
-      titleList.innerHTML = '';
-      const notes = Array.from(document.querySelectorAll('.note'));
-
-      notes.sort((a, b) => {
-        const pinnedA = a.dataset.pinned === 'true';
-        const pinnedB = b.dataset.pinned === 'true';
-        if (pinnedA && !pinnedB) return -1;
-        if (!pinnedA && pinnedB) return 1;
-        const titleA = a.querySelector('input.title').value.toLowerCase();
-        const titleB = b.querySelector('input.title').value.toLowerCase();
-        return titleA.localeCompare(titleB);
-      });
-
-      notes.forEach(note => {
-        const title = note.querySelector('input.title').value || 'Untitled';
-        const listItem = document.createElement('li');
-        listItem.classList.add('title-list-item');
-        listItem.textContent = title;
-
-        const pinButton = document.createElement('button');
-        pinButton.classList.add('pin-btn');
-        pinButton.textContent = note.dataset.pinned === 'true' ? '📌' : '📍';
-        pinButton.onclick = (e) => {
-          e.stopPropagation();
-          togglePin(note, pinButton);
-        };
-
-        listItem.appendChild(pinButton);
-        listItem.onclick = () => showNoteAndCopy(note);
-        titleList.appendChild(listItem);
-      });
-    }
-
-    function togglePin(note, pinButton) {
-      note.dataset.pinned = note.dataset.pinned === 'true' ? 'false' : 'true';
-      pinButton.textContent = note.dataset.pinned === 'true' ? '📌' : '📍';
-      saveNotes();
-      updateTitleList();
-    }
-
-    function showNoteAndCopy(note) {
-      document.querySelectorAll('.note').forEach(n => n.style.display = 'none');
-      note.style.display = 'block';
-      note.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-      const noteContent = note.querySelector('textarea').value;
-      navigator.clipboard.writeText(noteContent).catch(err => console.error("Error copying text: ", err));
-    }
-
-    function exportNotes() {
-      const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-      const blob = new Blob([JSON.stringify(notes, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'sticky_notes.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importNotes(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const importedNotes = JSON.parse(e.target.result);
-        localStorage.setItem('notes', JSON.stringify(importedNotes));
-        notesContainer.innerHTML = ''; // Clear existing notes
-        loadNotes(); // Load imported notes
-      };
-      reader.readAsText(file);
-    }
-
-    loadNotes();
-  </script>
 </body>
 </html>
