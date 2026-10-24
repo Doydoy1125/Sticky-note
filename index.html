@@ -3,578 +3,1109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiptop Distribution Inc. | Condiments &amp; Sauces, Delivered Nationwide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<title>Fun Math Quiz!</title>
 <style>
-  :root{
-    --green-deep:#173626;
-    --green-mid:#2f6b4a;
-    --green-fresh:#4f9d68;
-    --cream:#faf6ec;
-    --paper:#fffdf8;
-    --gold:#e2a63b;
-    --charcoal:#26261f;
-    --wood:#8a6a45;
-    --wood-dark:#6b4f31;
-    --line:rgba(23,54,38,0.14);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--charcoal);
-    font-family:'Inter',sans-serif;
-    font-size:16px;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,h4{
-    font-family:'Fraunces',serif;
-    font-weight:700;
-    margin:0;
-    color:var(--green-deep);
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12.5px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--wood-dark);
-    font-weight:500;
-  }
-  p{margin:0;}
-  a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
-  section{padding:96px 0;}
-  @media(max-width:760px){ section{padding:64px 0;} .wrap{padding:0 20px;} }
-
-  /* ---------- NAV ---------- */
-  header{
-    position:sticky;top:0;z-index:50;
-    background:rgba(250,246,236,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  nav.wrap{
-    display:flex;align-items:center;justify-content:space-between;
-    height:78px;
-  }
-  .logo{display:flex;align-items:center;gap:10px;}
-  .logo-mark{
-    width:38px;height:38px;border-radius:9px;
-    background:linear-gradient(155deg,var(--green-fresh),var(--green-deep));
-    display:flex;align-items:center;justify-content:center;
-    color:var(--cream);font-family:'Fraunces',serif;font-weight:900;font-size:18px;
-    box-shadow:0 4px 10px rgba(23,54,38,0.25);
-  }
-  .logo-text{font-family:'Fraunces',serif;font-weight:700;font-size:19px;color:var(--green-deep);letter-spacing:-0.01em;}
-  .logo-text span{color:var(--wood-dark);font-weight:400;font-style:italic;font-size:14px;display:block;margin-top:-2px;}
-  .nav-links{display:flex;gap:34px;font-size:14.5px;font-weight:600;}
-  .nav-links a{position:relative;padding:6px 0;color:var(--green-deep);}
-  .nav-links a:after{
-    content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);
-    transition:width .25s ease;
-  }
-  .nav-links a:hover:after{width:100%;}
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:12px 22px;border-radius:100px;
-    font-weight:600;font-size:14.5px;
-    border:1px solid transparent;cursor:pointer;
-    transition:transform .2s ease, box-shadow .2s ease;
-  }
-  .btn:hover{transform:translateY(-2px);}
-  .btn-primary{background:var(--gold);color:var(--green-deep);box-shadow:0 8px 20px rgba(226,166,59,0.35);}
-  .btn-ghost{border-color:var(--green-deep);color:var(--green-deep);}
-  .btn-light{background:var(--paper);color:var(--green-deep);}
-  .nav-cta{display:none;}
-  @media(min-width:900px){ .nav-cta{display:inline-flex;} }
-  .burger{display:none;}
-  @media(max-width:899px){ .nav-links{display:none;} }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;overflow:hidden;
-    background:radial-gradient(120% 140% at 15% -10%, #2a5a3f 0%, var(--green-deep) 55%, #0f2418 100%);
-    padding:110px 0 0;
-    color:var(--cream);
-  }
-  .hero .wrap{
-    display:grid;grid-template-columns:1.05fr 0.95fr;gap:50px;align-items:center;
-  }
-  @media(max-width:900px){ .hero .wrap{grid-template-columns:1fr;} }
-  .hero h1{
-    color:var(--paper);font-size:clamp(38px,5vw,62px);line-height:1.04;letter-spacing:-0.01em;
-  }
-  .hero h1 em{color:var(--gold);font-style:italic;}
-  .hero p.lead{
-    color:rgba(250,246,236,0.82);font-size:17.5px;max-width:480px;margin:22px 0 32px;
-  }
-  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
-  .hero-stats{display:flex;gap:28px;margin-top:52px;flex-wrap:wrap;}
-  .hero-stats div{border-left:2px solid rgba(226,166,59,0.5);padding-left:14px;}
-  .hero-stats b{font-family:'Fraunces',serif;font-size:26px;color:var(--paper);display:block;}
-  .hero-stats span{font-size:12.5px;color:rgba(250,246,236,0.65);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;}
-
-  /* shelf illustration */
-  .shelf-scene{position:relative;height:420px;}
-  .shelf-row{
-    position:absolute;left:0;right:0;height:118px;
-    display:flex;align-items:flex-end;gap:16px;padding:0 6px 14px;
-  }
-  .shelf-row:after{
-    content:"";position:absolute;left:-20px;right:-20px;bottom:0;height:14px;
-    background:linear-gradient(180deg,var(--wood),var(--wood-dark));
-    border-radius:3px;box-shadow:0 10px 18px rgba(0,0,0,0.35);
-  }
-  .shelf-row.r1{top:0;}
-  .shelf-row.r2{top:150px;}
-  .shelf-row.r3{top:300px;}
-  .jar{
-    position:relative;z-index:2;border-radius:8px 8px 4px 4px;
-    box-shadow:0 10px 16px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(255,255,255,0.12);
-    display:flex;align-items:flex-start;justify-content:center;padding-top:8px;
-  }
-  .jar-label{
-    width:70%;background:rgba(250,246,236,0.9);border-radius:3px;height:34%;margin-top:26%;
-  }
-  .jar.h1{height:96px;width:46px;}
-  .jar.h2{height:80px;width:52px;}
-  .jar.h3{height:104px;width:40px;}
-  .jar.h4{height:70px;width:60px;}
-  .c1{background:linear-gradient(180deg,#c94b30,#8f2f1c);}
-  .c2{background:linear-gradient(180deg,#e2a63b,#a8721e);}
-  .c3{background:linear-gradient(180deg,#4f9d68,#265c3c);}
-  .c4{background:linear-gradient(180deg,#4a3421,#2a1c11);}
-  .c5{background:linear-gradient(180deg,#d8cfa8,#a9986a);}
-
-  /* ---------- TRUST BAR ---------- */
-  .trustbar{
-    background:var(--green-deep);border-top:1px solid rgba(255,255,255,0.08);
-  }
-  .trustbar .wrap{
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:26px 32px;
-  }
-  .trustbar span{
-    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.05em;
-    color:rgba(250,246,236,0.75);text-transform:uppercase;
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
+    background: linear-gradient(160deg, #fff6e5 0%, #e8f7ff 50%, #eefcec 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
   }
 
-  /* ---------- SECTION HEADERS ---------- */
-  .sec-head{max-width:640px;margin-bottom:52px;}
-  .sec-head h2{font-size:clamp(28px,3.4vw,40px);margin-top:12px;letter-spacing:-0.01em;}
-  .sec-head p{margin-top:16px;color:#4a4a3f;font-size:16px;}
-
-  /* ---------- ABOUT ---------- */
-  .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;}
-  @media(max-width:860px){ .about-grid{grid-template-columns:1fr;gap:36px;} }
-  .about-frame{
-    aspect-ratio:4/5;border-radius:18px;
-    background:
-      repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 14px),
-      linear-gradient(155deg,var(--green-fresh),var(--green-deep));
-    position:relative;overflow:hidden;
-    box-shadow:0 24px 50px rgba(23,54,38,0.25);
-  }
-  .about-frame .tag{
-    position:absolute;bottom:22px;left:22px;right:22px;
-    background:rgba(250,246,236,0.94);border-radius:12px;padding:16px 18px;
-  }
-  .about-frame .tag .eyebrow{margin-bottom:4px;}
-  .about-body p{color:#3d3d33;font-size:16px;margin-bottom:16px;}
-  .about-list{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px;}
-  .about-list li{display:flex;gap:12px;font-size:15px;color:#3d3d33;}
-  .about-list b{color:var(--green-deep);}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:7px;flex:none;}
-
-  /* ---------- PRODUCT SHOWROOM ---------- */
-  .showroom{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .shelf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
-  @media(max-width:860px){ .shelf-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:560px){ .shelf-grid{grid-template-columns:1fr;} }
-  .prod-card{
-    background:var(--paper);padding:34px 28px 28px;position:relative;
-    transition:background .25s ease;
-  }
-  .prod-card:hover{background:#fbf3e0;}
-  .prod-icon{
-    width:52px;height:52px;border-radius:12px;
-    display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(155deg,var(--green-fresh),var(--green-deep));
-    color:var(--cream);font-size:22px;margin-bottom:20px;
-  }
-  .prod-card h3{font-size:19px;margin-bottom:8px;}
-  .prod-card p{font-size:14.5px;color:#5a5a4d;margin-bottom:14px;}
-  .prod-card .sku{
-    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--wood-dark);
-    letter-spacing:.05em;text-transform:uppercase;
-  }
-  .prod-card:after{
-    content:"";position:absolute;left:28px;right:28px;bottom:0;height:8px;
-    background:linear-gradient(180deg,var(--wood),var(--wood-dark));border-radius:2px 2px 0 0;
-    opacity:0.9;
+  .app-wrapper {
+    width: 100%;
+    max-width: 620px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: center;
   }
 
-  /* ---------- WHY PARTNER ---------- */
-  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
-  @media(max-width:900px){ .why-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:520px){ .why-grid{grid-template-columns:1fr;} }
-  .why-card{padding:0;}
-  .why-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.05em;}
-  .why-card h3{font-size:18px;margin:10px 0 8px;}
-  .why-card p{font-size:14.5px;color:#5a5a4d;}
-
-  /* ---------- COVERAGE ---------- */
-  .coverage{background:var(--green-deep);color:var(--paper);}
-  .coverage .sec-head h2, .coverage .sec-head p{color:var(--paper);}
-  .coverage .sec-head p{color:rgba(250,246,236,0.75);}
-  .region-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.12);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);}
-  @media(max-width:860px){ .region-grid{grid-template-columns:repeat(2,1fr);} }
-  .region-cell{background:rgba(255,255,255,0.03);padding:22px 20px;}
-  .region-cell .eyebrow{color:var(--gold);}
-  .region-cell h4{color:var(--paper);font-size:16.5px;margin-top:6px;}
-  .region-cell p{color:rgba(250,246,236,0.65);font-size:13.5px;margin-top:6px;}
-
-  /* ---------- CONTACT ---------- */
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
-  @media(max-width:860px){ .contact-grid{grid-template-columns:1fr;gap:36px;} }
-  .info-row{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);}
-  .info-row:first-child{padding-top:0;}
-  .info-icon{
-    width:40px;height:40px;border-radius:10px;background:var(--green-deep);color:var(--cream);
-    display:flex;align-items:center;justify-content:center;flex:none;font-size:17px;
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 10px 0 #ffe1a8, 0 16px 30px rgba(0,0,0,0.08);
+    padding: 24px 20px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
-  .info-row b{display:block;font-size:15px;color:var(--green-deep);margin-bottom:2px;}
-  .info-row span{font-size:14.5px;color:#5a5a4d;}
-  form{display:grid;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:32px;}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-  @media(max-width:520px){ .form-row{grid-template-columns:1fr;} }
-  label{font-size:13px;font-weight:600;color:var(--green-deep);display:block;margin-bottom:6px;}
-  input,textarea,select{
-    width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
-    background:var(--cream);font-family:'Inter',sans-serif;font-size:14.5px;color:var(--charcoal);
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
   }
-  input:focus,textarea:focus,select:focus{outline:2px solid var(--green-fresh);outline-offset:1px;}
-  textarea{resize:vertical;min-height:100px;}
-  .form-note{font-size:12.5px;color:#7a7a6c;margin-top:-4px;}
 
-  /* ---------- FOOTER ---------- */
-  footer{background:#0f2418;color:rgba(250,246,236,0.7);padding:56px 0 28px;}
-  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,0.08);}
-  .footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
-  .footer-cols h4{color:var(--paper);font-size:14px;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px;}
-  .footer-cols a{display:block;font-size:14px;margin-bottom:10px;color:rgba(250,246,236,0.65);}
-  .footer-cols a:hover{color:var(--gold);}
-  .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:24px;font-size:13px;}
+  .pill {
+    background: #fff2cc;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #7a5b00;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-  /* reveal animation */
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
-  .reveal.show{opacity:1;transform:none;}
-  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none;} }
+  .pill.timer { background: #d8f3ff; color: #0a5f7a; }
+  .pill.score { background: #e6ffe0; color: #2a7a1e; }
+
+  h1 {
+    font-size: 26px;
+    color: #ff914d;
+    margin: 6px 0 18px;
+  }
+
+  .bar-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #999;
+    text-align: left;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .timer-bar-track {
+    width: 100%;
+    height: 16px;
+    background: #f1f1f1;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 2px solid #e6e6e6;
+  }
+  .timer-bar-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #7ee8a0, #57d9c8);
+    border-radius: 999px;
+    transition: width 1s linear, background 0.4s ease;
+  }
+  .timer-bar-fill.timer-warning {
+    background: linear-gradient(90deg, #ffd15e, #ffb037);
+  }
+  .timer-bar-fill.timer-danger {
+    background: linear-gradient(90deg, #ff8a8a, #ff5502);
+    animation: pulseBar 0.6s ease-in-out infinite;
+  }
+  @keyframes pulseBar {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .progress-label { color: #b48ce0; }
+
+  .progress-track {
+    width: 100%;
+    height: 22px;
+    background: repeating-linear-gradient(
+      90deg,
+      #f4ecff 0px, #f4ecff 6px,
+      #ffffff 6px, #ffffff 8px
+    );
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 22px;
+    border: 2px solid #e3d3ff;
+    padding: 3px;
+    display: flex;
+    gap: 3px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: repeating-linear-gradient(
+      90deg,
+      #c9a4ff 0px, #c9a4ff 14px,
+      #b98cf0 14px, #b98cf0 18px
+    );
+    border-radius: 6px;
+    transition: width 0.35s ease;
+  }
+
+  .question-box {
+    background: #fdf6ff;
+    border-radius: 22px;
+    padding: 30px 10px;
+    margin-bottom: 24px;
+    border: 4px dashed #d9b8ff;
+  }
+
+  .question-text {
+    font-size: 54px;
+    font-weight: bold;
+    color: #5b4b8a;
+    letter-spacing: 2px;
+  }
+
+  .answer-display {
+    background: #fffaf0;
+    border: 4px solid #ffd9a0;
+    border-radius: 18px;
+    padding: 14px 10px;
+    margin-bottom: 18px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .answer-display.correct-display {
+    background: #e6ffe0;
+    border-color: #57d968;
+  }
+  .answer-display.wrong-display {
+    background: #ffe9e9;
+    border-color: #ff6b6b;
+  }
+
+  #answerText {
+    font-size: 40px;
+    font-weight: bold;
+    color: #5b4b8a;
+    letter-spacing: 4px;
+  }
+
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .dot-panel {
+    flex: 0 0 130px;
+    background: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 10px 0 #d9c4ff, 0 16px 30px rgba(0,0,0,0.08);
+    padding: 18px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dot-panel-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #b48ce0;
+    margin-bottom: 2px;
+  }
+
+  .table-btn {
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.4;
+    padding: 10px 0;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: #ffd15e;
+    box-shadow: 0 5px 0 #e0a930;
+    transition: transform 0.08s ease;
+    margin-top: 2px;
+  }
+  .table-btn:active {
+    transform: translateY(3px);
+    box-shadow: none;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(60, 40, 90, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+
+  .modal-box {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 22px 18px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.2);
+    position: relative;
+    text-align: center;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #ff6b6b;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #cc4444;
+  }
+  .modal-close:active {
+    transform: translateY(3px);
+    box-shadow: none;
+  }
+
+  .modal-title {
+    font-size: 22px;
+    color: #ff914d;
+    margin: 4px 0 16px;
+  }
+
+  .table-grid {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 3px;
+  }
+
+  .table-cell {
+    background: #f6f1ff;
+    border-radius: 6px;
+    padding: 6px 2px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #5b4b8a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+  }
+
+  .table-cell.header-cell {
+    background: #d9b8ff;
+    color: #5b3a8a;
+  }
+
+  .table-cell.corner {
+    background: #ff9d5c;
+    color: white;
+  }
+
+  @media (max-width: 420px) {
+    .table-cell { font-size: 10px; padding: 4px 1px; }
+  }
+
+  .dot-btn {
+    width: 100%;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 12px 0;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.08s ease;
+    flex-shrink: 0;
+  }
+  .dot-btn:active {
+    transform: translateY(3px);
+    box-shadow: none !important;
+  }
+
+  .plus-btn {
+    background: #9ee6a0;
+    box-shadow: 0 5px 0 #62c46a;
+  }
+
+  .minus-btn {
+    background: #ff9ecb;
+    box-shadow: 0 5px 0 #e56ea3;
+  }
+
+  .dot-display {
+    width: 100%;
+    flex: 1;
+    background: #f6f1ff;
+    border: 3px solid #e3d3ff;
+    border-radius: 14px;
+    padding: 8px 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    gap: 5px;
+    min-height: 220px;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+
+  .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #b98cf0;
+    flex-shrink: 0;
+    animation: dotPop 0.2s ease;
+  }
+
+  @keyframes dotPop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  .num-btn {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 16px 0;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: #6fc3ff;
+    box-shadow: 0 6px 0 #3f9fe0;
+    transition: transform 0.08s ease;
+  }
+  .num-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+
+  .clear-btn {
+    background: #ffb37a;
+    box-shadow: 0 6px 0 #e08a45;
+  }
+
+  .enter-btn {
+    background: #7ee39a;
+    box-shadow: 0 6px 0 #4bb668;
+  }
+
+  .num-btn.correct {
+    background: #57d968 !important;
+    box-shadow: 0 6px 0 #2f9e3d !important;
+  }
+  .num-btn.wrong {
+    background: #ff6b6b !important;
+    box-shadow: 0 6px 0 #cc4444 !important;
+  }
+
+  .feedback {
+    font-size: 22px;
+    font-weight: bold;
+    min-height: 32px;
+    margin-top: 14px;
+  }
+
+  .start-screen, .end-screen {
+    padding: 10px 0 6px;
+  }
+
+  .big-emoji {
+    font-size: 70px;
+    margin-bottom: 6px;
+  }
+
+  .mode-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #999;
+    margin-top: 18px;
+    margin-bottom: 10px;
+  }
+
+  .mode-dropdown {
+    width: 100%;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 16px 14px;
+    border-radius: 18px;
+    border: 3px solid #ffd9a0;
+    background: #fffaf0 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d9722f'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 16px center;
+    background-size: 22px;
+    color: #d9722f;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin-bottom: 6px;
+    font-family: inherit;
+  }
+  .mode-dropdown:focus {
+    outline: none;
+    border-color: #ff9d5c;
+  }
+
+  .start-btn, .again-btn {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 16px 36px;
+    border-radius: 999px;
+    border: none;
+    color: white;
+    background: linear-gradient(90deg, #ff9d5c, #ff6f91);
+    box-shadow: 0 6px 0 #d95a70;
+    cursor: pointer;
+  }
+  .start-btn:active, .again-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+
+  .hidden { display: none; }
+
+  .stars {
+    font-size: 40px;
+    margin: 14px 0;
+    letter-spacing: 6px;
+  }
+
+  .result-text {
+    font-size: 20px;
+    color: #555;
+    margin-top: 6px;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.9); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.50s ease; }
+
+  /* ---------- Flash cards ---------- */
+  .flash-open-btn {
+    margin-top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 999px;
+    border: none;
+    color: white;
+    background: linear-gradient(90deg, #6fc3ff, #9b8cf0);
+    box-shadow: 0 6px 0 #6c63c4;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .flash-open-btn:active { transform: translateY(4px); box-shadow: none; }
+
+  .flash-home-btn {
+    background: #fff2cc;
+    color: #7a5b00;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .fc-scene {
+    perspective: 1000px;
+    width: 100%;
+    height: 260px;
+    margin: 16px 0 22px;
+    cursor: pointer;
+  }
+  .fc-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+  }
+  .fc-card.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .fc-front {
+    background: #fdf6ff;
+    border: 5px dashed #d9b8ff;
+  }
+  .fc-back {
+    background: #e9fbea;
+    border: 5px solid #9ee6a0;
+    transform: rotateY(180deg);
+  }
+  .fc-question {
+    font-size: 60px;
+    font-weight: bold;
+    color: #5b4b8a;
+    letter-spacing: 2px;
+  }
+  .fc-hint { margin-top: 12px; font-size: 15px; color: #aaa; }
+  .fc-answer-eq { font-size: 24px; color: #5b4b8a; margin-bottom: 4px; }
+  .fc-answer { font-size: 100px; font-weight: bold; color: #2f9e3d; line-height: 1.1; }
+
+  .fc-buttons { display: flex; gap: 10px; }
+  .fc-btn {
+    flex: 1;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 14px 0;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-family: inherit;
+  }
+  .fc-btn:active { transform: translateY(4px); box-shadow: none !important; }
+  .fc-btn:disabled { opacity: 0.4; }
+  .fc-prev { background: #6fc3ff; box-shadow: 0 6px 0 #3f9fe0; }
+  .fc-flip { background: #ffd15e; box-shadow: 0 6px 0 #e0a930; }
+  .fc-next { background: #7ee39a; box-shadow: 0 6px 0 #4bb668; }
+
+  @media (max-width: 680px) {
+    .app-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+    .dot-panel {
+      flex: none;
+      width: 100%;
+      max-width: 480px;
+      flex-direction: row;
+    }
+    .dot-panel-label {
+      writing-mode: vertical-rl;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .dot-btn {
+      width: 60px;
+    }
+    .dot-display {
+      min-height: 70px;
+      max-height: 90px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .question-text { font-size: 42px; }
+    .num-btn { font-size: 22px; padding: 13px 0; }
+    .dot-btn { font-size: 24px; padding: 8px 12px; }
+    .dot { width: 13px; height: 13px; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <nav class="wrap">
-    <div class="logo">
-      <div class="logo-mark">T</div>
-      <div class="logo-text">TIPTOP<span>Distribution Inc.</span></div>
-    </div>
-    <div class="nav-links">
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#coverage">Coverage</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <a href="#contact" class="btn btn-primary nav-cta">Become a Partner</a>
-  </nav>
-</header>
+<div class="app-wrapper">
 
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <p class="eyebrow">Wholesale Distributor · Est. Philippines</p>
-      <h1>Stocking every shelf,<br><em>from source to sari-sari.</em></h1>
-      <p class="lead">Tiptop Distribution Inc. moves the condiments, sauces, and pantry staples Filipino households trust — reliably, on time, nationwide.</p>
-      <div class="hero-cta">
-        <a href="#products" class="btn btn-primary">View Product Line</a>
-        <a href="#contact" class="btn btn-ghost" style="border-color:rgba(250,246,236,0.4);color:var(--paper);">Become a Partner</a>
-      </div>
-      <div class="hero-stats">
-        <div><b>15+</b><span>Years Distributing</span></div>
-        <div><b>300+</b><span>Retail Partners</span></div>
-        <div><b>6</b><span>Product Categories</span></div>
-      </div>
-    </div>
-    <div class="shelf-scene">
-      <div class="shelf-row r1">
-        <div class="jar h2 c1"><div class="jar-label"></div></div>
-        <div class="jar h1 c2"><div class="jar-label"></div></div>
-        <div class="jar h3 c3"><div class="jar-label"></div></div>
-        <div class="jar h2 c4"><div class="jar-label"></div></div>
-      </div>
-      <div class="shelf-row r2">
-        <div class="jar h3 c2"><div class="jar-label"></div></div>
-        <div class="jar h2 c5"><div class="jar-label"></div></div>
-        <div class="jar h1 c1"><div class="jar-label"></div></div>
-        <div class="jar h4 c3"><div class="jar-label"></div></div>
-      </div>
-      <div class="shelf-row r3">
-        <div class="jar h1 c3"><div class="jar-label"></div></div>
-        <div class="jar h2 c1"><div class="jar-label"></div></div>
-        <div class="jar h3 c2"><div class="jar-label"></div></div>
-        <div class="jar h2 c4"><div class="jar-label"></div></div>
-      </div>
-    </div>
-  </div>
-  <div class="trustbar">
-    <div class="wrap">
-      <span>Datu-style Vinegars</span>
-      <span>Banana &amp; Tomato Catsup</span>
-      <span>Soy &amp; Fish Sauce</span>
-      <span>Cooking Oils</span>
-      <span>Specialty Sauces</span>
-      <span>Seasonings</span>
-    </div>
-  </div>
-</section>
+<div class="card" id="card">
 
-<section id="about">
-  <div class="wrap about-grid reveal">
-    <div class="about-frame">
-      <div class="tag">
-        <p class="eyebrow">Our Warehouse</p>
-        <h4 style="font-size:16px;">Central hub, Batangas region</h4>
-      </div>
-    </div>
-    <div class="about-body">
-      <p class="eyebrow">Who We Are</p>
-      <h2 style="margin:12px 0 18px;font-size:clamp(26px,3vw,36px);">A distribution partner built for the Filipino pantry</h2>
-      <p>Tiptop Distribution Inc. connects trusted condiment and sauce brands with the sari-sari stores, groceries, and food service businesses that keep every Filipino table full.</p>
-      <p>We handle the logistics — storage, order fulfillment, and delivery — so our brand partners can focus on what they do best, and our retail partners always have stock on hand.</p>
-      <ul class="about-list">
-        <li><span class="dot"></span><span><b>Reliable fulfillment</b> — consistent, on-schedule deliveries across our coverage area.</span></li>
-        <li><span class="dot"></span><span><b>Proper storage &amp; handling</b> — temperature-appropriate warehousing for every product line.</span></li>
-        <li><span class="dot"></span><span><b>Retailer support</b> — flexible order sizes for stores of every scale.</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
+  <!-- START SCREEN -->
+  <div class="start-screen" id="startScreen">
+    <div class="big-emoji">🧮🐣</div>
+    <h1>Let's Play Math!</h1>
+    <p style="font-size:18px; color:#777;">50 fun questions<br>90 seconds each<br>Numbers 1 to 20 🎈</p>
 
-<section class="showroom" id="products">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">The Showroom</p>
-      <h2>Our product lines</h2>
-      <p>A full pantry of condiments and sauces, distributed to retailers and food service partners nationwide. Replace the categories below with your actual product brands and photos.</p>
-    </div>
-    <div class="shelf-grid reveal">
-      <div class="prod-card">
-        <div class="prod-icon">🍋</div>
-        <h3>Vinegar &amp; Souring Agents</h3>
-        <p>Cane, coconut, and spiced vinegars for sawsawan and cooking.</p>
-        <span class="sku">Category 01</span>
-      </div>
-      <div class="prod-card">
-        <div class="prod-icon">🍅</div>
-        <h3>Banana &amp; Tomato Catsup</h3>
-        <p>Classic and spiced catsup varieties, sold by the case or pallet.</p>
-        <span class="sku">Category 02</span>
-      </div>
-      <div class="prod-card">
-        <div class="prod-icon">🫙</div>
-        <h3>Soy &amp; Fish Sauce</h3>
-        <p>Everyday staples for marinades, dips, and home cooking.</p>
-        <span class="sku">Category 03</span>
-      </div>
-      <div class="prod-card">
-        <div class="prod-icon">🫒</div>
-        <h3>Cooking Oils</h3>
-        <p>Palm and vegetable oils in retail and food-service sizes.</p>
-        <span class="sku">Category 04</span>
-      </div>
-      <div class="prod-card">
-        <div class="prod-icon">🌶️</div>
-        <h3>Specialty &amp; Sawsawan Sauces</h3>
-        <p>Lechon sauce, banana ketchup blends, and regional favorites.</p>
-        <span class="sku">Category 05</span>
-      </div>
-      <div class="prod-card">
-        <div class="prod-icon">🧂</div>
-        <h3>Seasonings &amp; Mixes</h3>
-        <p>Powdered seasonings, marinades, and flavor mixes.</p>
-        <span class="sku">Category 06</span>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="mode-label">Pick a game:</div>
+    <select class="mode-dropdown" id="modeDropdown" onchange="chooseMode(this.value)">
+      <option value="mix">🔀 Mixed</option>
+      <option value="add">➕ Addition</option>
+      <option value="sub">➖ Subtraction</option>
+      <option value="mul">✖️ Multiplication</option>
+    </select>
 
-<section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Why Partner With Tiptop</p>
-      <h2>Built for retailers who can't afford to run out of stock</h2>
-    </div>
-    <div class="why-grid reveal">
-      <div class="why-card">
-        <p class="why-num">01</p>
-        <h3>On-time delivery</h3>
-        <p>Scheduled routes across our coverage area keep your shelves consistently stocked.</p>
-      </div>
-      <div class="why-card">
-        <p class="why-num">02</p>
-        <h3>Flexible order sizes</h3>
-        <p>From single cases for small sari-sari stores to full pallets for supermarkets.</p>
-      </div>
-      <div class="why-card">
-        <p class="why-num">03</p>
-        <h3>Quality assurance</h3>
-        <p>Proper storage and handling for every batch, from warehouse to your door.</p>
-      </div>
-      <div class="why-card">
-        <p class="why-num">04</p>
-        <h3>Direct support</h3>
-        <p>A dedicated contact for orders, questions, and account concerns.</p>
-      </div>
-    </div>
+    <button class="start-btn" onclick="startQuiz()">▶ START</button>
+    <br>
+    <button class="flash-open-btn" onclick="openFlash()">🃏 Flash Cards</button>
   </div>
-</section>
 
-<section class="coverage" id="coverage">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Where We Deliver</p>
-      <h2>Our coverage area</h2>
-      <p>Update this section with the actual provinces, cities, or regions Tiptop currently services.</p>
+  <!-- FLASH CARD SCREEN -->
+  <div class="hidden" id="flashScreen">
+    <div class="topbar">
+      <button class="flash-home-btn" onclick="closeFlash()">🏠 Home</button>
+      <div class="pill">🃏 Card <span id="fcNum">1</span></div>
     </div>
-    <div class="region-grid reveal">
-      <div class="region-cell">
-        <p class="eyebrow">Region</p>
-        <h4>CALABARZON</h4>
-        <p>Batangas · Cavite · Laguna</p>
-      </div>
-      <div class="region-cell">
-        <p class="eyebrow">Region</p>
-        <h4>Metro Manila</h4>
-        <p>All cities, daily delivery routes</p>
-      </div>
-      <div class="region-cell">
-        <p class="eyebrow">Region</p>
-        <h4>Central Luzon</h4>
-        <p>Bulacan · Pampanga</p>
-      </div>
-      <div class="region-cell">
-        <p class="eyebrow">Region</p>
-        <h4>MIMAROPA</h4>
-        <p>Scheduled deliveries on request</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="contact">
-  <div class="wrap contact-grid">
-    <div class="reveal">
-      <p class="eyebrow">Get In Touch</p>
-      <h2 style="margin:12px 0 24px;font-size:clamp(26px,3vw,36px);">Let's stock your store</h2>
-      <div class="info-row">
-        <div class="info-icon">📍</div>
-        <div><b>Warehouse &amp; Office</b><span>Your business address, City, Province</span></div>
-      </div>
-      <div class="info-row">
-        <div class="info-icon">📞</div>
-        <div><b>Phone</b><span>(043) 000 0000 · 0917 000 0000</span></div>
-      </div>
-      <div class="info-row">
-        <div class="info-icon">✉️</div>
-        <div><b>Email</b><span>orders@tiptopdistribution.ph</span></div>
-      </div>
-      <div class="info-row">
-        <div class="info-icon">🕒</div>
-        <div><b>Business Hours</b><span>Monday – Saturday, 8:00 AM – 5:00 PM</span></div>
-      </div>
-    </div>
-    <form class="reveal" onsubmit="event.preventDefault(); alert('Thanks! This form is a placeholder — connect it to your email or a form service to start receiving inquiries.');">
-      <div>
-        <label>Business Name</label>
-        <input type="text" placeholder="e.g. Aling Nena Sari-Sari Store" required>
-      </div>
-      <div class="form-row">
-        <div>
-          <label>Contact Person</label>
-          <input type="text" placeholder="Full name" required>
+    <div class="fc-scene" onclick="flipFlash()">
+      <div class="fc-card" id="fcCard">
+        <div class="fc-face fc-front">
+          <div class="fc-question" id="fcQuestion">2 + 3</div>
+          <div class="fc-hint">Tap the card to see the answer</div>
         </div>
-        <div>
-          <label>Phone Number</label>
-          <input type="tel" placeholder="09XX XXX XXXX" required>
-        </div>
-      </div>
-      <div>
-        <label>Email Address</label>
-        <input type="email" placeholder="you@example.com" required>
-      </div>
-      <div>
-        <label>What are you interested in?</label>
-        <select>
-          <option>Becoming a retail partner</option>
-          <option>Bulk / food service order</option>
-          <option>Brand or supplier inquiry</option>
-          <option>Something else</option>
-        </select>
-      </div>
-      <div>
-        <label>Message</label>
-        <textarea placeholder="Tell us about your store and what you'd like to order..."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary" style="justify-content:center;">Send Inquiry</button>
-      <p class="form-note">This form doesn't send anywhere yet — hook it up to your email or a service like Formspree when you're ready to go live.</p>
-    </form>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div style="max-width:280px;">
-        <div class="logo" style="margin-bottom:14px;">
-          <div class="logo-mark">T</div>
-          <div class="logo-text" style="color:var(--paper);">TIPTOP<span style="color:rgba(250,246,236,0.55);">Distribution Inc.</span></div>
-        </div>
-        <p style="font-size:14px;">Distributing the condiments and sauces Filipino households and businesses trust, nationwide.</p>
-      </div>
-      <div class="footer-cols">
-        <div>
-          <h4>Explore</h4>
-          <a href="#products">Products</a>
-          <a href="#about">About Us</a>
-          <a href="#coverage">Coverage Area</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div>
-          <h4>Connect</h4>
-          <a href="#">Facebook</a>
-          <a href="#">Instagram</a>
-          <a href="#">Viber Business</a>
+        <div class="fc-face fc-back">
+          <div class="fc-answer-eq" id="fcAnswerEq"></div>
+          <div class="fc-answer" id="fcAnswer">5</div>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Tiptop Distribution Inc. All rights reserved.</span>
-      <span>Site built for showcase purposes.</span>
+
+    <div class="fc-buttons">
+      <button class="fc-btn fc-prev" id="fcPrevBtn" onclick="prevFlash()">◀ Back</button>
+      <button class="fc-btn fc-flip" onclick="flipFlash()">🔄 Flip</button>
+      <button class="fc-btn fc-next" onclick="nextFlash()">Next ▶</button>
     </div>
   </div>
-</footer>
+
+  <!-- QUIZ SCREEN -->
+  <div class="hidden" id="quizScreen">
+    <div class="topbar">
+      <div class="pill timer">⏱️ <span id="timeLeft">90</span>s</div>
+      <div class="pill score">⭐ <span id="score">0</span></div>
+    </div>
+    <div class="bar-label">⏱️ Time Left</div>
+    <div class="timer-bar-track">
+      <div class="timer-bar-fill" id="timerBarFill"></div>
+    </div>
+    <div class="bar-label progress-label">📋 Question <span id="qNumLabel">1</span> of 50</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="question-box" id="questionBox">
+      <div class="question-text" id="questionText">2 + 3 = ?</div>
+    </div>
+
+    <div class="answer-display" id="answerDisplay">
+      <span id="answerText">&nbsp;</span>
+    </div>
+
+    <div class="numpad" id="numpad">
+      <button class="num-btn" onclick="pressDigit(1)">1</button>
+      <button class="num-btn" onclick="pressDigit(2)">2</button>
+      <button class="num-btn" onclick="pressDigit(3)">3</button>
+      <button class="num-btn" onclick="pressDigit(4)">4</button>
+      <button class="num-btn" onclick="pressDigit(5)">5</button>
+      <button class="num-btn" onclick="pressDigit(6)">6</button>
+      <button class="num-btn" onclick="pressDigit(7)">7</button>
+      <button class="num-btn" onclick="pressDigit(8)">8</button>
+      <button class="num-btn" onclick="pressDigit(9)">9</button>
+      <button class="num-btn clear-btn" onclick="pressClear()">⌫</button>
+      <button class="num-btn" onclick="pressDigit(0)">0</button>
+      <button class="num-btn enter-btn" onclick="pressEnter()">✓</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div class="hidden end-screen" id="endScreen">
+    <div class="big-emoji" id="endEmoji">🎉</div>
+    <h1 id="endTitle">Great Job!</h1>
+    <div class="stars" id="starsBox">⭐⭐⭐</div>
+    <div class="result-text" id="resultText">You got 0 out of 50 correct!</div>
+    <button class="again-btn" onclick="backToStart()">🔁 Play Again</button>
+  </div>
+
+</div>
+
+<!-- DOT COUNTER PANEL (separate division, shown only during the quiz) -->
+<div class="dot-panel hidden" id="dotPanel">
+  <div class="dot-panel-label">🔢 Count</div>
+  <button class="dot-btn plus-btn" onclick="addDot()">+</button>
+  <div class="dot-display" id="dotDisplay"></div>
+  <button class="dot-btn minus-btn" onclick="removeDot()">−</button>
+  <button class="table-btn" onclick="openTable()">📖<br>Table</button>
+</div>
+
+</div>
+
+<!-- MULTIPLICATION TABLE MODAL -->
+<div class="modal-overlay hidden" id="tableModal" onclick="closeTableOnOverlay(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeTable()">✕</button>
+    <h2 class="modal-title">✖️ Times Table</h2>
+    <div class="table-grid" id="tableGrid"></div>
+  </div>
+</div>
 
 <script>
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
-  }, {threshold:0.12});
-  revealEls.forEach(el=>io.observe(el));
+const TOTAL_QUESTIONS = 50;
+const TIME_LIMIT = 90;
+
+let questions = [];
+let currentIndex = 0;
+let score = 0;
+let timeLeft = TIME_LIMIT;
+let timerInterval = null;
+let answered = false;
+let currentInput = "";
+let dotCount = 0;
+let quizMode = "mix"; // 'add', 'sub', 'mul', or 'mix'
+
+function chooseMode(mode) {
+  quizMode = mode;
+  const dropdown = document.getElementById("modeDropdown");
+  if (dropdown) dropdown.value = mode;
+}
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Generate a question. Add/Sub answers stay within 1-20.
+// Multiplication uses factors 1-10, so products can go up to 100.
+function generateQuestion() {
+  // 'mix' only mixes addition and subtraction (multiplication is its own mode)
+  let opType;
+  if (quizMode === "add") opType = "add";
+  else if (quizMode === "sub") opType = "sub";
+  else if (quizMode === "mul") opType = "mul";
+  else opType = Math.random() < 0.5 ? "add" : "sub";
+
+  let a, b, answer, opSymbol;
+
+  if (opType === "add") {
+    // a + b, both a and b within 1-20, answer within 1-20 (2-20 realistically)
+    answer = randInt(2, 20);
+    a = randInt(1, answer - 1);
+    b = answer - a;
+    opSymbol = "+";
+  } else if (opType === "sub") {
+    // a - b, a within 2-20, b within 1 to a-1, so answer is within 1-20 (no zero)
+    a = randInt(2, 20);
+    b = randInt(1, a - 1);
+    answer = a - b;
+    opSymbol = "-";
+  } else {
+    // multiplication: factors 1-10, product up to 100
+    a = randInt(1, 10);
+    b = randInt(1, 10);
+    answer = a * b;
+    opSymbol = "×";
+  }
+
+  return {
+    text: `${a} ${opSymbol} ${b} = ?`,
+    answer: answer
+  };
+}
+
+function buildQuestions() {
+  questions = [];
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    questions.push(generateQuestion());
+  }
+}
+
+// ---------- Flash cards (reuse the same mode dropdown + question generator) ----------
+let fcDeck = [];
+let fcIndex = 0;
+
+function newFlashCard() {
+  const q = generateQuestion();
+  return { text: q.text.replace(" = ?", ""), answer: q.answer };
+}
+
+function showFlash() {
+  const c = fcDeck[fcIndex];
+  document.getElementById("fcCard").classList.remove("flipped");
+  document.getElementById("fcQuestion").textContent = c.text;
+  document.getElementById("fcAnswerEq").textContent = c.text + " =";
+  document.getElementById("fcAnswer").textContent = c.answer;
+  document.getElementById("fcNum").textContent = fcIndex + 1;
+  document.getElementById("fcPrevBtn").disabled = fcIndex === 0;
+}
+
+function openFlash() {
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("flashScreen").classList.remove("hidden");
+  fcDeck = [newFlashCard()];
+  fcIndex = 0;
+  showFlash();
+}
+
+function closeFlash() {
+  document.getElementById("flashScreen").classList.add("hidden");
+  document.getElementById("startScreen").classList.remove("hidden");
+}
+
+function flipFlash() {
+  document.getElementById("fcCard").classList.toggle("flipped");
+}
+
+function nextFlash() {
+  if (fcIndex === fcDeck.length - 1) fcDeck.push(newFlashCard());
+  fcIndex++;
+  showFlash();
+}
+
+function prevFlash() {
+  if (fcIndex === 0) return;
+  fcIndex--;
+  showFlash();
+}
+
+function backToStart() {
+  document.getElementById("endScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("dotPanel").classList.add("hidden");
+  document.getElementById("startScreen").classList.remove("hidden");
+  chooseMode("mix");
+}
+
+function startQuiz() {
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("endScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.remove("hidden");
+  document.getElementById("dotPanel").classList.remove("hidden");
+
+  buildQuestions();
+  currentIndex = 0;
+  score = 0;
+  answered = false;
+
+  document.getElementById("score").textContent = score;
+  document.getElementById("progressFill").style.width = "0%";
+
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  currentInput = "";
+  dotCount = 0;
+  const q = questions[currentIndex];
+  document.getElementById("questionText").textContent = q.text;
+  document.getElementById("feedback").textContent = "";
+  updateAnswerDisplay();
+  renderDots();
+
+  const pct = (currentIndex / TOTAL_QUESTIONS) * 100;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("qNumLabel").textContent = currentIndex + 1;
+
+  document.querySelectorAll(".num-btn").forEach(b => {
+    b.disabled = false;
+    b.classList.remove("correct", "wrong");
+  });
+  document.querySelectorAll(".dot-btn").forEach(b => b.disabled = false);
+
+  const box = document.getElementById("questionBox");
+  box.classList.remove("pop");
+  void box.offsetWidth;
+  box.classList.add("pop");
+
+  // Reset timer to full 90 seconds for this question
+  timeLeft = TIME_LIMIT;
+  document.getElementById("timeLeft").textContent = timeLeft;
+  const timerBar = document.getElementById("timerBarFill");
+  timerBar.style.width = "100%";
+  timerBar.classList.remove("timer-warning", "timer-danger");
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timeLeft").textContent = timeLeft;
+    updateTimerBar();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeout();
+    }
+  }, 1000);
+}
+
+function updateTimerBar() {
+  const timerBar = document.getElementById("timerBarFill");
+  const pct = Math.max(0, (timeLeft / TIME_LIMIT) * 100);
+  timerBar.style.width = pct + "%";
+  timerBar.classList.remove("timer-warning", "timer-danger");
+  if (timeLeft <= 15) {
+    timerBar.classList.add("timer-danger");
+  } else if (timeLeft <= 30) {
+    timerBar.classList.add("timer-warning");
+  }
+}
+
+function updateAnswerDisplay() {
+  document.getElementById("answerText").innerHTML = currentInput.length ? currentInput : "&nbsp;";
+}
+
+function pressDigit(d) {
+  if (answered) return;
+  if (currentInput.length >= 3) return;
+  currentInput += String(d);
+  updateAnswerDisplay();
+}
+
+function pressClear() {
+  if (answered) return;
+  currentInput = "";
+  updateAnswerDisplay();
+}
+
+function pressEnter() {
+  if (answered) return;
+  if (currentInput.length === 0) return;
+  checkAnswer(parseInt(currentInput, 10));
+}
+
+function renderDots() {
+  const display = document.getElementById("dotDisplay");
+  display.innerHTML = "";
+  for (let i = 0; i < dotCount; i++) {
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    display.appendChild(dot);
+  }
+}
+
+function addDot() {
+  if (answered) return;
+  if (dotCount >= 100) return;
+  dotCount++;
+  renderDots();
+}
+
+function removeDot() {
+  if (answered) return;
+  if (dotCount <= 0) return;
+  dotCount--;
+  renderDots();
+}
+
+let tableBuilt = false;
+
+function buildTableGrid() {
+  const grid = document.getElementById("tableGrid");
+  grid.innerHTML = "";
+
+  // top-left blank corner
+  const corner = document.createElement("div");
+  corner.className = "table-cell corner";
+  corner.textContent = "×";
+  grid.appendChild(corner);
+
+  // header row (1-10)
+  for (let c = 1; c <= 10; c++) {
+    const headCell = document.createElement("div");
+    headCell.className = "table-cell header-cell";
+    headCell.textContent = c;
+    grid.appendChild(headCell);
+  }
+
+  // rows
+  for (let r = 1; r <= 10; r++) {
+    const rowHead = document.createElement("div");
+    rowHead.className = "table-cell header-cell";
+    rowHead.textContent = r;
+    grid.appendChild(rowHead);
+
+    for (let c = 1; c <= 10; c++) {
+      const cell = document.createElement("div");
+      cell.className = "table-cell";
+      cell.textContent = r * c;
+      grid.appendChild(cell);
+    }
+  }
+
+  tableBuilt = true;
+}
+
+function openTable() {
+  if (!tableBuilt) buildTableGrid();
+  document.getElementById("tableModal").classList.remove("hidden");
+}
+
+function closeTable() {
+  document.getElementById("tableModal").classList.add("hidden");
+}
+
+function closeTableOnOverlay(event) {
+  if (event.target.id === "tableModal") {
+    closeTable();
+  }
+}
+
+function handleTimeout() {
+  if (answered) return;
+  answered = true;
+  const q = questions[currentIndex];
+  document.querySelectorAll(".num-btn").forEach(b => b.disabled = true);
+  document.querySelectorAll(".dot-btn").forEach(b => b.disabled = true);
+  document.getElementById("answerText").textContent = q.answer;
+  document.getElementById("feedback").textContent = `⏰ Time's up! Answer: ${q.answer}`;
+  document.getElementById("feedback").style.color = "#e08a00";
+
+  setTimeout(() => {
+    currentIndex++;
+    if (currentIndex >= TOTAL_QUESTIONS) {
+      endQuiz();
+    } else {
+      showQuestion();
+    }
+  }, 1200);
+}
+
+function checkAnswer(value) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const q = questions[currentIndex];
+  document.querySelectorAll(".num-btn").forEach(b => b.disabled = true);
+  document.querySelectorAll(".dot-btn").forEach(b => b.disabled = true);
+
+  if (value === q.answer) {
+    score++;
+    document.getElementById("score").textContent = score;
+    document.getElementById("answerDisplay").classList.add("correct-display");
+    document.getElementById("feedback").textContent = "🎉 Yay! Correct!";
+    document.getElementById("feedback").style.color = "#2a9d2a";
+  } else {
+    document.getElementById("answerDisplay").classList.add("wrong-display");
+    document.getElementById("answerText").textContent = `${value} ❌  →  ${q.answer}`;
+    document.getElementById("feedback").textContent = `😊 Good try! Answer: ${q.answer}`;
+    document.getElementById("feedback").style.color = "#e08a00";
+  }
+
+  setTimeout(() => {
+    document.getElementById("answerDisplay").classList.remove("correct-display", "wrong-display");
+    currentIndex++;
+    if (currentIndex >= TOTAL_QUESTIONS) {
+      endQuiz();
+    } else {
+      showQuestion();
+    }
+  }, 1000);
+}
+
+function endQuiz() {
+  clearInterval(timerInterval);
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("dotPanel").classList.add("hidden");
+  document.getElementById("endScreen").classList.remove("hidden");
+  document.getElementById("progressFill").style.width = "100%";
+
+  document.getElementById("resultText").textContent = `You got ${score} out of ${TOTAL_QUESTIONS} correct!`;
+
+  let stars = "⭐";
+  let emoji = "🙂";
+  let title = "Nice Try!";
+  const ratio = score / TOTAL_QUESTIONS;
+  if (ratio >= 0.8) { stars = "⭐⭐⭐"; emoji = "🏆"; title = "Super Star!"; }
+  else if (ratio >= 0.5) { stars = "⭐⭐"; emoji = "🎉"; title = "Great Job!"; }
+  else { stars = "⭐"; emoji = "🙂"; title = "Nice Try!"; }
+
+  document.getElementById("starsBox").textContent = stars;
+  document.getElementById("endEmoji").textContent = emoji;
+  document.getElementById("endTitle").textContent = title;
+}
+
+// Pre-select Mixed mode by default on first load
+chooseMode("mix");
 </script>
 
 </body>
